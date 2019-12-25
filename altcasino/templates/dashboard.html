@@ -1,0 +1,152 @@
+{% extends "dlayout.html" %} {% block content %}
+<div  class="dtitle"> <h1><p id="dT">{{ current_user.username }}</p></div</h1></div>
+
+<!-- <div class="chart">
+  <div  class="chartInner">
+    <div class="dbalance">
+      <span class="label"> Available Balance</span> 
+      <p>{{ current_user.balance }}</p></div
+    >
+    <div class="daddress">
+      <p
+        >
+        <span class="label">Deposit Address</span> <br>
+        {{ current_user.address }}</p
+      ></div
+    >
+    <div class="demail">
+        <span class="label">Email</span> 
+      <p>{{ current_user.email }}</p></div
+    >
+  </div>
+</div> -->
+
+
+<div class="chart">
+<table class="chartInner">
+    <th>Balance</th>
+    
+    <!-- <th>Email</th> -->
+
+  <tr>
+  <!-- <td><h4>{{ current_user.balance }}</h4></td> -->
+  <td><h4 class="h4Addy"> {{ current_user.balance }}</h4></td>
+  <!-- <td><h4>{{ current_user.email }}</h4></td> -->
+</tr>
+
+</table>
+
+
+    <table class="chartInner">
+        <th>Deposit Address</th>
+        
+        <!-- <th>Email</th> -->
+    
+      <tr>
+      <!-- <td><h4>{{ current_user.balance }}</h4></td> -->
+      <td><h4 class="h4Addy"> {{ current_user.address }}</h4></td>
+      <!-- <td><h4>{{ current_user.email }}</h4></td> -->
+    </tr>
+    
+    </table>
+
+</div>
+<hr>
+<div class="dashboard">
+  <div class="move">
+      <h1>WITHDRAW</h1>
+  </div>
+  <hr>
+
+  
+  <form id="wForm" action="">
+    Address
+    <br>
+    <input class="withdraw" autocomplete="off" id="address" type="text" />
+    <br>
+<br>
+    Amount
+    <br>
+    <input class="withdraw" id="amount" type="number" step="0.001" />
+    <br>
+    <br>
+    <button name="withdrawCoins" type="submit" class="btn submitButton tails" id="withdrawCoins" value="submit">Submit</button>
+  </form>
+  <div>
+    <p id="response"></p>
+  </div>
+ 
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+ <script>
+   $(document).ready(function() {
+     $('#wForm').on('submit', function(e) {
+       e.preventDefault()
+       $.ajax({
+        data: {
+          address: $("#address").val(),
+          amount: $("#amount").val()
+        },
+        type: "POST",
+        url: "/processWithdrawal"
+      }).done(function(data) {
+        if (data.result) {
+          $("#response").text(data.result)
+        }
+        if (data.error) {
+          $("#response").text(data.error)
+        }
+      })
+     })
+   })
+
+   $("#address").ready(function() {
+    var printout = document.getElementById("address").value;
+    var loadout = document.getElementById("amount").value;
+    if (printout == "" || loadout == "") {
+      document.getElementById("withdrawCoins").disabled = true;
+    } else {
+      document.getElementById("withdrawCoins").disabled = false;
+    }
+  });
+
+  $("#amount").ready(function() {
+    var loadout = document.getElementById("amount").value;
+    if (loadout == "" || loadout <= 0) {
+      document.getElementById("withdrawCoins").disabled = true;
+    } else {
+      document.getElementById("withdrawCoins").disabled = false;
+    }
+  });
+
+   $("#address").keyup(function() {
+    var printout = document.getElementById("address").value;
+    var loadout = document.getElementById("amount").value;
+    if (printout == "" || loadout == "" || loadout <= 0) {
+      document.getElementById("withdrawCoins").disabled = true;
+    } else {
+      document.getElementById("withdrawCoins").disabled = false;
+    }
+  });
+
+  $("#amount").keyup(function() {
+    var loadout = document.getElementById("amount").value;
+    var printout = document.getElementById("address").value;
+    if (loadout <= 0 || loadout == "" || printout == "")  {
+      document.getElementById("withdrawCoins").disabled = true;
+    } else {
+      document.getElementById("withdrawCoins").disabled = false;
+    }
+  });
+$(document).ready(function() {
+  var upper = document.getElementById('dT').innerHTML.toUpperCase()
+  console.log( "tihs ", upper)
+  $('#dT').text(upper)
+})
+
+ </script>
+{% endblock script %}

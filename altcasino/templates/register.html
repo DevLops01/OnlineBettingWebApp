@@ -1,0 +1,84 @@
+{% extends "dlayout.html" %} {% block content %}
+<div class="registerContainer">
+  <form action="" method="POST" autocomplete="off">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+      <legend>REGISTER</legend>
+      <div id="username" class="form-group">
+        {% if form.username.errors %}
+        {{ form.username(class="form-control is-invalid") }}
+        <div class="invalid-feedback">
+          {% for i in form.username.errors %}
+          <span>{{ i }}</span>
+          {% endfor %}
+        </div>
+        {% else %}
+        {{ form.username(class="form-control") }}
+        {% endif %}
+        {{ form.username.label(class="form-control-label") }}
+      </div>
+      <div id="email" class="form-group">
+        {% if form.email.errors %}
+        {{ form.email(class="form-control is-invalid") }}
+        <div class="invalid-feedback">
+          {% for i in form.email.errors %}
+          <span>{{ i }}</span>
+          {% endfor %}
+        </div>
+        {% else %}
+        {{ form.email(class="form-control ") }}
+        {% endif %}
+        {{ form.email.label(class="form-control-label") }}
+      </div>
+      <div id="password" class="form-group">
+        {% if form.password.errors %}
+        {{ form.password(class="form-control is-invalid") }}
+        <div class="invalid-feedback">
+          {% for i in form.password.errors %}
+          <span>{{ i }}</span>
+          {% endfor %}
+        </div>
+        {% else %}
+        {{ form.password(class="form-control ") }}
+        {% endif %}
+        {{ form.password.label(class="form-control-label") }}
+      </div>
+      <div id="cpassword" class="form-group">
+        {% if form.ConfirmPassword.errors %}
+        {{ form.ConfirmPassword(class="form-control is-invalid") }}
+        <div class="invalid-feedback">
+          {% for i in form.ConfirmPassword.errors %}
+          <span>{{ i }}</span>
+          {% endfor %}
+        </div>
+        {% else %}
+        {{ form.ConfirmPassword(class="form-control ") }}
+        {% endif %}
+        {{ form.ConfirmPassword.label(class="form-control-label") }}
+      </div>
+      <div id="recaptcha_widget" class="form-group gcaptcha">
+        {{form.recaptcha(class="")}}
+        {{form.recaptcha.label(class="")}}
+      </div>
+      <div id="registerSubmit" class="form-group">
+        {{ form.submit(id="submitButton",class="btn regBtn") }}
+      </div>
+    </fieldset>
+  </form>
+</div>
+<br />
+<div class="already">
+  <small class="text-muted">
+    <a class="ml-2 text-muted" href="{{ url_for('login') }}"
+      >Already have an account?</a
+    >
+  </small>
+</div>
+<div class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %} {% if
+  messages %} {% for category, i in messages %}
+  <div id="createdAlert" class="alert alert-{{ category }}">
+    {{ i }}
+  </div>
+  {% endfor %} {% endif %} {% endwith %} {% endblock %}
+</div>

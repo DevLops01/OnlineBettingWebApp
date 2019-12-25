@@ -1,0 +1,80 @@
+{% extends "dlayout.html" %} {% block content %}
+<div class="loginContainer">
+  <form action="" method="POST" autocomplete="off">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+      <legend>LOGIN</legend>
+      <div id="username" class="form-group">
+          {% if form.username.errors %}
+            {{ form.username(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+              {% for i in form.username.errors %}
+              <span>{{ i }}</span> 
+              {% endfor %}
+            </div>
+          {% else %}
+          {{ form.username(class="form-control") }}
+          {% endif %}
+          {{ form.username.label(class="form-control-label") }}
+        </div>
+        <div id="password" class="form-group">
+            {% if form.password.errors %}
+              {{ form.password(class="form-control is-invalid") }}
+              <div class="invalid-feedback">
+                {% for i in form.password.errors %}
+                <span>{{ i }}</span> 
+                {% endfor %}
+              </div>
+            {% else %}
+            {{ form.password(class="form-control ") }}
+            {% endif %}
+            {{ form.password.label(class="form-control-label") }}
+          </div>
+          <div class="form-check">
+            {{form.remember(class="form-check-input")}}
+            {{form.remember.label(class="form-check-label")}}
+          </div>
+          <div id="recaptcha_widget" class="form-group">
+            {{form.recaptcha(class="recaptcha_widget")}}
+            {{form.recaptcha.label(class="")}}
+          </div>
+
+          <style>
+              
+          </style>
+          
+      
+      <!-- <form id="googlCaptcha" action="" method="POST">
+        <div class="g-recaptcha" data-sitekey="6Lcl-LwUAAAAAADPNQ7PQiWRXeZ8xAw9-AJvJueu"></div>
+        <br/>
+        <input type="submit" value="Submit">
+      </form> -->
+      <div id="registerSubmit" class="form-group">
+        {{ form.submit(id="submitButton", class="btn regBtn") }}
+      </div>
+      
+      <small class="text-muted"><a class="ml-2 text-muted" href="">Forgot Password?</a></small> 
+    </fieldset>
+  </form>
+</div>
+<div class="already">
+
+    <small class="text-muted">
+    
+        <a class="ml-2 text-muted" href="{{ url_for('register') }}"> Register</a>
+      </small>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      {% for i in messages %}
+      <div id="createdAlert" class="alert alert-{{ category }}">
+        {{ i }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+    </div>
+      
+</div>
+
+
+{% endblock %}

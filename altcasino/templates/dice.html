@@ -1,0 +1,239 @@
+{% extends "layout.html" %} {% block content %}
+<div id="markers">
+  {% if not current_user.is_authenticated %}
+  <div>Demo Mode</div>
+  {% endif %} {% if current_user.is_authenticated %}
+  <h1 id="userbalance" class="balance"> BALANCE: {{ balance }}</h1>
+  {% else %}
+  <h1 id="userbalance" class="balance"> BALANCE: {{ balance }}</h1>
+  {% endif %}
+
+  <form id="diceForm" action="">
+    Bet Amount
+    <div>
+      <!-- prettier-ignore -->
+
+      <input
+        autocomplete="off"
+        class="BetAmount"
+        id="Dbet"
+        type="number"
+        step="0.1"
+        value="10"
+      />
+    </div>
+    <div class="rolldisplay">
+      Roll under
+      <span id="underShow"></span>
+      To Win
+    </div>
+    <div class="slidecontainer">
+      <input
+        type="range"
+        min="2"
+        max="11"
+        value="6"
+        class="slider"
+        id="myRange"
+      />
+    </div>
+    <div id="payout" class="payout"> Payout x2</div>
+
+    <div>
+      <button id="dhalf" class="changeButtons">1/2</button>
+      <button id="dtime2" class="changeButtons">2X</button>
+      <button id="dmax" class="changeButtons">MAX</button>
+      <br />
+      <button
+        name="roll"
+        type="submit"
+        class="btn submitButton tails roll"
+        id="roll"
+        value="roll"
+        >Roll</button
+      >
+    </div>
+  </form>
+  <!-- prettier-ignore -->
+  <button name="double" type="submit" class="btn submitButton tails" id="double" value="double" style="display:none;">DD</button>
+  <!-- prettier-ignore -->
+  <button name="stand" type="submit" class="btn submitButton heads" id="stand" value="stand" style="display:none;">Stand</button>
+  <!-- prettier-ignore -->
+  <button name="hit" type="submit" class="btn submitButton tails" id="hit" value="hit" style="display:none;">Hit</button>
+  <!-- prettier-ignore -->
+</div>
+
+<div class="diceapp">
+  <div id="diceTable">
+    <div class="dice">
+      <div id="dice1" class="dice1" tyle="display:none;">
+        <div id="dice1n"></div>
+      </div>
+      <div id="dice2" class="dice2" style="display:none;">
+        <div id="dice2n"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- prettier-ignore -->
+
+  <div id="successAlert" class="alert alert-success" role="alert" style="display:none;"></div>
+  <!-- prettier-ignore -->
+  <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>
+</div>
+{% endblock %} {% block script %}
+<script>
+  var slider = document.getElementById("myRange");
+  var output = document.getElementById("underShow");
+  var payout = document.getElementById("payout");
+  output.innerHTML = slider.value; // Display the default slider value
+
+  slider.oninput = function() {
+    output.innerHTML = this.value;
+    if (this.value == 6) {
+      payout.innerHTML = "Payout x2";
+    } else if (this.value == 5) {
+      payout.innerHTML = "Payout x2.4";
+    } else if (this.value == 4) {
+      payout.innerHTML = "Payout x3";
+    } else if (this.value == 3) {
+      payout.innerHTML = "Payout x6";
+    } else if (this.value == 2) {
+      payout.innerHTML = "Payout x6";
+    } else if (this.value == 7) {
+      payout.innerHTML = "Payout x0.71";
+    } else if (this.value == 8) {
+      payout.innerHTML = "Payout x0.5";
+    } else if (this.value == 9) {
+      payout.innerHTML = "Payout x0.33";
+    } else if (this.value == 10) {
+      payout.innerHTML = "Payout x0.2";
+    } else if (this.value == 11) {
+      payout.innerHTML = "Payout x0.09";
+    }
+  };
+
+  $(document).ready(function() {
+    var socket = io.connect("http://127.0.0.1:5000");
+    $("#dhalf").on("click", function(e) {
+      e.preventDefault();
+      half = $("#Dbet").val() / 2;
+      $("#Dbet").val(half);
+      bet = $("#Dbet").val();
+      console.log(bet);
+      return bet;
+    });
+    $("#dtime2").on("click", function(e) {
+      e.preventDefault();
+      time2 = $("#Dbet").val() * 2;
+      $("#Dbet").val(time2);
+      var bet = $("#Dbet").val();
+      var max = 150;
+      if (bet > max) {
+        let bet = $("#Dbet").val("150");
+      }
+      console.log(bet);
+      return bet;
+    });
+    $("#dmax").on("click", function(e) {
+      e.preventDefault();
+      $("#Dbet").val("150");
+      bet = $("#Dbet").val();
+      return bet;
+    });
+  });
+</script>
+
+<script>
+  $(document).ready(function() {
+    $("#roll").on("click", function(e) {
+      document.getElementById("roll").disabled = true;
+      function enableB() {
+        document.getElementById("roll").disabled = false;
+      }
+      setTimeout(enableB, 1500);
+      $.ajax({
+        data: {
+          bet: $("#Dbet").val(),
+          under: $("#myRange").val()
+        },
+        type: "POST",
+        url: "/processdice"
+      }).done(function(data) {
+        if (data.dice1) {
+          $("#dice1").show();
+          $("#dice1n").text(data.dice1);
+        }
+        if (data.dice2) {
+          $("#dice2").show();
+          $("#dice2n").text(data.dice2);
+        }
+
+        if (data.error) {
+          $("#errorAlert")
+            .text(data.error)
+            .delay("slow")
+            .fadeIn()
+            .delay("slow")
+            .fadeOut();
+          $("#successAlert").hide();
+        } else if (data.nobalance) {
+          $("#errorAlert")
+            .text(data.nobalance)
+            .delay("slow")
+            .fadeIn()
+            .delay("slow")
+            .fadeOut();
+          $("#successAlert").hide();
+        } else if (data.result) {
+          $("#successAlert")
+            .text(data.result)
+            .delay("slow")
+            .fadeIn()
+            .delay("slow")
+            .fadeOut();
+          $("#errorAlert").hide();
+        }
+        if (data.increase) {
+          $("#userbalance")
+            .fadeIn()
+            .text(data.increase);
+        } else if (data.decrease) {
+          $("#userbalance")
+            // .delay(1500)
+            .fadeIn()
+            .text(data.decrease);
+        }
+        setTimeout(function getbal() {
+          $.get("/processget", function(data) {
+            $("#userbalance").text("BALANCE: " + data.increase);
+          });
+        }, 500);
+      });
+      e.preventDefault();
+    });
+  });
+
+  $(document).ready(function() {
+    var printout = "{{ balance }}";
+    if (printout <= 0) {
+      document.getElementById("roll").disabled = true;
+    }
+  });
+
+  $("#Dbet").keyup(function() {
+    var printout = document.getElementById("Dbet").value;
+    var bal = "{{ balance }}";
+    var max = "150";
+    if (printout > 150) {
+      $("#Dbet").val("150");
+    }
+    if (printout <= 0 || bal <= 0) {
+      document.getElementById("roll").disabled = true;
+    } else {
+      document.getElementById("roll").disabled = false;
+    }
+  });
+</script>
+
+{% endblock script%}

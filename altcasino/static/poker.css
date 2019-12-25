@@ -1,0 +1,334 @@
+body,
+html {
+  font-family: Chivo, sans-serif;
+  width: 100%;
+  height: 100%;
+  /* background: url("images/bg.png") no-repeat center/cover; */
+  background-color: #070a14;
+  color: #a1a1a1;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f5a623;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(134, 134, 134);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(155, 155, 155);
+}
+
+.buyinModal {
+  background-color: #070a14 !important;
+  color: #f5a623 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 5px 0 rgba(255, 255, 255, 0.582),
+    0 2px 10px 0 rgba(255, 255, 255, 0.12);
+  /* border: solid 2px #f5a623 !important; */
+}
+.address {
+  background-color: #92929236;
+  border-radius: 5px;
+  color: #a3a3a3;
+  padding: 8px;
+}
+
+#boughtChips1 {
+  background-color: green !important;
+  border: none !important;
+}
+
+#closeCancel {
+  background-color: red !important;
+  border: none !important;
+}
+#boughtAmount1 {
+  background: transparent;
+  color: whitesmoke;
+  border: none;
+  border-bottom: 1px solid #f5a623;
+  text-align: center;
+}
+.myHeader {
+  text-align: center !important;
+}
+.modal-title {
+  margin: 0 auto !important;
+  /* border-bottom: #f5a623 !important; */
+}
+.modal-header {
+  border-bottom: 1px solid #f5a623 !important;
+}
+.toLobby {
+  text-align: center;
+  top: 5rem;
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  background-color: #f5a623;
+  border-radius: 5px;
+  border: none;
+  color: #fdfdfd;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.chatContainer {
+  float: left;
+}
+.actionBox {
+  position: relative;
+  width: 600px;
+  height: 110px;
+  margin: 120px auto;
+  margin-bottom: 0;
+  border: 1px solid #f5a623;
+  border-radius: 10px 0px 0 0px;
+}
+.cfr {
+  position: relative;
+  width: 500px;
+  font-weight: bold;
+  top: 10px;
+  left: 4rem;
+  margin: 0 auto;
+}
+.slidecontainer {
+  width: 500px; /* Width of the outside container */
+  margin-bottom: 10px;
+}
+
+/* The slider itself */
+.slider {
+  border-radius: 10px;
+  -webkit-appearance: none; /* Override default CSS styles */
+  appearance: none;
+  width: 100px; /* Full-width */
+  height: 5px; /* Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
+  transition: opacity 0.2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  border-radius: 50%;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #f5a623 !important; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  border-radius: 50%;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #f5a623 !important; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.button {
+  width: 70px;
+  height: 50px;
+  background-color: #f5a623;
+  color: #fdfdfd;
+  border: none;
+  border-radius: 5px;
+}
+
+.player-name {
+  color: linen;
+  font-weight: bolder;
+}
+
+.chatbox {
+  border-radius: 10px 0px 0 0px;
+  background-image: url("images/texture.png");
+  background-color: #070a14;
+  color: #fdfdfd;
+  float: left;
+  width: 260px;
+  font-size: 10px;
+  height: 80px;
+  border: 1px solid #f5a623;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  word-wrap: break-word;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+#messages {
+  float: left;
+}
+#myMessage {
+  width: 190px;
+  border: 1px solid #f5a623;
+  background-color: #070a14;
+  color: #fdfdfd;
+}
+#sendbutton {
+  width: 70px;
+  border: 1px solid #f5a623;
+  background-color: #f5a623;
+  color: #fdfdfd;
+}
+/* .submitChat {
+  width: 260px;
+  height: 20%;
+} */
+
+.poker-table {
+  /* background-image: url("../images/poker_table.png");
+  background-repeat: no-repeat;
+  width: 745px;
+  height: 411px; */
+  text-align: center;
+  top: 3rem;
+  position: relative;
+  margin: auto;
+  width: 46.5rem;
+  height: 25.6rem;
+  /* width: 34.875rem;
+  height: 19.2rem; */
+  border-radius: 200px;
+  background-image: url("images/texture.png");
+  background-color: #070a14;
+  border: solid 10px #f5a623;
+  box-shadow: 0 14px 20px 0 rgba(0, 0, 0, 0.377),
+    0 8px 40px 0 rgba(0, 0, 0, 0.493);
+}
+
+.tableLogo {
+  width: 200px;
+  color: #f5a623;
+  font-size: 2rem;
+  margin: 10pc auto;
+  opacity: 0.7;
+}
+.tableLogo span {
+  color: #fdfdfd;
+}
+.seat {
+  cursor: pointer;
+  text-align: center;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background-color: rgba(85, 85, 85, 0.678);
+  /* box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); */
+  box-shadow: 0 2px 5px 0 rgba(255, 255, 255, 0.582),
+    0 2px 10px 0 rgba(255, 255, 255, 0.12);
+}
+
+.chair {
+  width: 50px;
+  margin: 1.3rem auto;
+}
+
+#seat1 {
+  position: absolute;
+  right: 4px;
+  top: 5px;
+}
+#seat1 img {
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  right: 0px;
+  top: 0px;
+}
+
+#seat2 {
+  position: absolute;
+  right: -30px;
+  bottom: 50px;
+}
+
+#seat2 img {
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  right: 0px;
+  top: 0px;
+}
+
+#seat3 {
+  position: absolute;
+  right: 200px;
+  bottom: -60px;
+}
+
+#seat3 img {
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  right: 0px;
+  top: 0px;
+}
+
+#seat4 {
+  position: absolute;
+  right: 450px;
+  bottom: -60px;
+}
+
+#seat4 img {
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  right: 0px;
+  top: 0px;
+}
+
+#seat5 {
+  position: absolute;
+  left: -30px;
+  bottom: 50px;
+}
+#seat5 img {
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  right: 0px;
+  top: 0px;
+}
+
+#seat6 {
+  position: absolute;
+  left: 4px;
+  top: 5px;
+}
+
+#seat6 img {
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  right: 0px;
+  top: 0px;
+}

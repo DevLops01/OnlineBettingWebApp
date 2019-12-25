@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>AltCasino</title>
+    <link rel="icon" href="static/images/favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    />
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Ubuntu" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/css/mdb.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./static/home.css" />
+    
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./static/animate.css" />
+    
+  </head>
+  <body>
+
+<!-- Showcase & Nav -->
+<header id="nav-wrapper">
+    <nav id="nav">
+      <div class="nav left">
+        <span class="gradient skew"
+          ><h1 class="logo un-skew">
+            <a class="logoText" href="#home"><span id="cspan">alt</span>Casino</a>
+          </h1></span
+        >
+        <button id="menu" class="btn-nav">
+          <span class="fas fa-bars"></span>
+        </button>
+      </div>
+      <div class="nav right">
+        <a href="#altCasinoCoin" class="nav-link active"
+          ><span class="nav-link-span"
+            ><span class="u-nav">altCasino</span></span
+          ></a
+        >
+        <a href="#walletDiv" class="nav-link">
+            <span class="nav-link-span">
+              <span class="u-nav">Wallets</span>
+            </span>
+          </a>
+        <a href="#specs" class="nav-link"
+          ><span class="nav-link-span"
+            ><span class="u-nav">Specs</span></span
+          ></a
+        >
+        <a href="#roadmap" class="nav-link"
+          ><span class="nav-link-span"
+            ><span class="u-nav">Roadmap</span></span
+          ></a
+        >
+        
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('dashboard') }}" id="alwaysLit" class="nav-link">
+            <span class="nav-link-span">
+              <span class="u-nav ">Play</span>
+            </span>
+          </a>
+          <a href="{{ url_for('logout') }}" class="nav-link">
+              <span class="nav-link-span">
+                <span class="u-nav">Logout</span>
+              </span>
+            </a>
+        {% else %}
+            <a href="{{ url_for('login') }}"  id="alwaysLit" class="nav-link">
+                <span class="nav-link-span ">
+                  <span class="u-nav">Play Now</span>
+                </span>
+              </a>
+        {% endif %}
+      </div>
+    </nav>
+  </header>
+
+
+ 
+
+
+  <div class="section-main">
+    <div id="fadeMeIn" class="hero-text">
+   
+        <h1 class="smallMobile"><span id="cspan">alt</span><span id="cspan"></span>Casino</h1>
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <h2>Provably <span id="typed">Fair Betting Platform</span></h2>
+        <h3>Powered by Blockchain Technology</h3>
+        <a href="{{ url_for('dashboard') }}"><button class="playButton">Play Now</button></a>
+    </div>
+  </div>
+</div>
+
+
+<!-- END Showcase & Nav -->
+
+<!-- Stats -->
+<div class="container stats animateMe" data-animation="fadeInUp">
+  <div class="row rowstats">
+    
+
+    <div class="col-sm statcol">
+        Block Height
+        <br>
+       {{ height }}
+      </div>
+      <div class="col-sm statcol">
+          Difficulty
+          <br>
+         {{ difficulty }}
+        </div>
+        <div class="col-sm statcol">
+            Masternodes
+            <br>
+           {{ activeNodes }}
+          </div>
+      <div class="col-sm statcol">
+          Current Supply
+          <br>
+         {{ current_supply }}
+        </div>
+
+        <div class="col-sm statcol">
+            Online
+            <br>
+           {{ connections }}
+          </div>
+         
+      
+  </div>
+  <a href="http://45.76.95.24/"><button class="explorerButton">EXPLORER</button></a>
+</div>
+
+<!-- Main Content Sections -->
+<div id="altCasinoCoin" class="container aboutC">
+    <div id="abouts" class="about animateMe" >
+        <h1>altCasino</h1>
+        <img class="animateMe" data-animation="fadeInLeft" src="/static/images/g2.png" alt="">
+      <p class="animateMe" data-animation="fadeInRight">AltCasino is curated and continuously  developed by an ambitious network of experienced software engineers and industry experts. We are driven by our passion to democratize provably fair online betting in an anonymous, secure, and exciting way. Altcasino offers a user friendly, intuitive, yet revolutionary platform that harnesses the power of blockchain technology to overcome crucial hurdles in the online casino industry.
+      <br>
+      <br>
+      Altcasino offers instant, fee-less, trust-less, and secure transactions facilitated via ALTC coins and the ALTC blockchain. 'ALTC' is the innovative cryptocurrency used to process all altCasino bets, withdrawals, deposits, and transactions. altCasino is proud to offer players all of the exciting features outlined above, however, we are committed to continously improving our platform and aim to attain our mission of becoming an industry innovator with the help of you, and the members of our wonderful community.</p>
+    </div>
+
+</div>
+
+<div  id="HideMobile"   class="container"> 
+  
+  <!-- Cards -->
+  <!-- <h1>AltCasino </h1> -->
+  <h2 class="text-center mb-5 animateMe" data-animation="fadeInRight" >Features</h2>
+<div class="containment">
+   
+  <div class="card animateMe" data-animation="fadeInLeft">
+      <div class="face face1">
+          <div class="content">
+              <img src="/static/images/payment.png">
+              <h3>Instant Payouts</h3>
+          </div>
+      </div>
+      <div class="face face2">
+          <div class="content">
+              <p>With altCasino's mission to remain 100% player focused, we offer instant payouts and withdrawals. No waiting period, no minimums, and absolutely no fees. Ever... </p>
+                  <a href="https://drive.google.com/file/d/1vQcM4w8dojnIJ5bnYVnOolFkPcTWgVa3/view?usp=sharing">Whitepaper</a>
+          </div>
+      </div>
+  </div>
+  <div class="card animateMe" data-animation="fadeInUp">
+      <div class="face face1">
+          <div class="content">
+              <img src="/static/images/invest.png">
+              <h3>House Investing</h3>
+          </div>
+      </div>
+      <div class="face face2">
+          <div class="content">
+              <p>Looking for a new way to earn passive income? Join in on our house investing pool. Each user will be able to hold a minimum amount of coins in our pool...</p>
+                  <a href="https://drive.google.com/file/d/1vQcM4w8dojnIJ5bnYVnOolFkPcTWgVa3/view?usp=sharing">Whitepaper</a>
+          </div>
+      </div>
+  </div>
+  <div class="card animateMe" data-animation="fadeInRight">
+      <div class="face face1">
+          <div class="content">
+              <img src="/static/images/fair.png">
+              <h3>Provably Fair</h3>
+          </div>
+      </div>
+      <div class="face face2">
+          <div class="content">
+              <p>The altCasino platform is a provably fair platform with each bet based on a predetermined seed based on the outcome of the previous hand (blockchain), upon winning a hand the hash of that seed is revealed...</p>
+                  <a href="https://drive.google.com/file/d/1vQcM4w8dojnIJ5bnYVnOolFkPcTWgVa3/view?usp=sharing">Whitepaper</a>
+          </div>
+      </div>
+  </div>
+</div>
+ <!-- END Cards -->
+
+ <!-- Games -->
+<style>
+
+ .gaming{
+   text-align: center !important;
+   width: 100%;
+   /* background-color: azure; */
+  
+}
+.about-1, .about-2, .about-3, .about-4, .about-5{
+  margin: 0 auto !important;
+
+}
+
+.about-1 img, .about-2 img, .about-3 img, .about-4 img, .about-5 img{
+  margin-bottom: 30px;
+
+}
+</style>
+
+
+
+<div class="container gaming">
+    <h2 class="text-center mb-5 delay-1s animateMe" data-animation="slideInLeft">Games</h2>
+ <div class="row games">
+    <div class="col-sm-6 col-md-2 about-1  animateMe" data-animation="fadeInDown">
+       <a href="{{ url_for('dice') }}"><img alt="Community-Centric" src="/static/images/dice.png" class="center-block" width="120" height="120"></a> 
+      <h2>Dice</h2>
+    <p><b>Roll with the best of them! </b>Join in on our fair odds dice game, just choose your roll under value, place your bets and win big instantly.</p>
+    </div>
+    <div class="col-sm-6 col-md-2 about-2 delay-1s animateMe" data-animation="fadeInUp">
+        <a href="{{ url_for('blackjack') }}"><img alt="Community-Centric" src="/static/images/blackjack.png" class="center-block" width="120" height="120"></a>
+        <h2>Blackjack</h2>
+    <p><b>Single Deck, Playable Double Down Blackjack! </b>Unlike other platforms, altCasino offers the best odds to our players. Playable Double Down's allow players to continue to choose wether they hit or stand after placing a double down bet. </p>
+    </div>
+    <span class="clearfix visible-xs visible-sm"></span>
+    <div class="col-sm-6 col-md-2 about-3  animateMe" data-animation="fadeInDown">
+    <a href="{{ url_for('coinflip') }}"><img alt="Community-Centric" src="/static/images/coinflip.png" class="center-block" width="120" height="120"></a>
+    <h2>Coinflip</h2>
+    <p><b>Classic Coinflip. </b>Fun and exciting game of coinflip as you know it, place your bets and choose your side. Stay tuned for the release of PvP coinflip, where you play against other players from across the globe.</p>
+    </div>
+    <div class="col-sm-6 col-md-2 about-4 delay-1s animateMe" data-animation="fadeInUp">
+    <a href="{{ url_for('slots') }}"><img alt="Player Promotions" src="/static/images/slots.png" class="center-block" width="120" height="120"></a>
+    <h2>Slots</h2>
+    <p><b>Ever-expanding Virtual Slot Machine. </b>Try your luck at our rewrding slots. Exciting bonuses are added often along with spiked payout increases to reward our loyal players.</p>
+    </div>
+    <span class="clearfix visible-xs visible-sm"></span>
+    <div class="col-sm-12 col-md-2 about-5  animateMe" data-animation="fadeInDown">
+    <img alt="100% Decentralized" src="/static/images/poker.png" class="center-block" width="120" height="120">
+    <h2>Poker</h2>
+    <p><b>COMING SOON. </b>NL & PL multiplayer Texas Hold Em' Poker is currently in development and is slated to be available in Q4 of 2019 along with many other games. Stay Tuned!</p>
+    </div>
+    </div>
+  </div>
+
+ <!-- End Games -->
+
+ <!-- Wallet Section -->
+<div id="walletDiv">
+<div  class="container minfo animateMe" data-animation="slideInRight">
+    <h2 class="text-center mb-5 animateMe" data-animation="fadeInUp">Getting Started</h2>
+  <div class="wordWrap">  
+    <h2 class="floatText">Download your ALTC wallet today & join the fun!</h2>
+    <br>
+    <p class="floatText">Compatible operating systems:</p>
+  </div>
+
+  <div class="row walletrow">
+    
+      <div class="col-sm cOne">
+        <a href="https://github.com/PythonKoder/altcasino/releases"><button class="wButton"><i class="fab fa-windows bI"></i> Windows</button></a>
+      </div>
+      <div class="col-sm">
+         <a href="https://github.com/PythonKoder/altcasino/releases"><button class="wButton"><i class="fab fa-ubuntu bI"></i> Ubuntu 16.04</button></a> 
+      </div>
+      <div class="col-sm">
+          <a href="https://github.com/PythonKoder/altcasino/releases"><button class="wButton"><i class="fab fa-ubuntu bI"></i> Ubuntu 18.04</button></a>
+      </div>
+      <div class="col-sm">
+          <a href="https://github.com/PythonKoder/altcasino/releases"><button class="wButton"><i class="fab fa-apple bI"></i> Mac</button></a>
+      </div>
+
+  </div>
+  
+</div>
+</div>
+ <!-- END Wallet Section -->
+ 
+
+<!-- Table -->
+<div id="specs">
+<table  class="tcontainer animateMe" data-animation="fadeInLeft">
+    <!-- <h1 class="specs animateMe" data-animation="fadeInLeft">SPECIFICATIONS</h1> -->
+    <h2 class="text-center mb-5 animateMe" data-animation="fadeInUp">Specifications</h2>
+    <tr>
+        <td><h1>Ticker</h1></td>
+        <td><h1>Supply</h1></td>
+        <td><h1>Algorithm</h1></td>
+        <td><h1>Block Time</h1></td>
+        <td><h1>Collateral</h1></td>
+        <td><h1>Pre-Mine</h1></td>
+        <td><h1>Presale</h1></td>
+      </tr>
+    <tr>
+        <td>ALTC</td>
+        <td>21.297.995</td>
+        <td>QUARK</td>
+        <td>60s</td>
+        <td>10.000 ALTC</td>
+        <td>639.000 ALTC (3%)</td>
+        <td>250.000 ALTC</td>
+
+    </tr>
+</table>
+
+
+<table class="tcontainer animateMe" data-animation="fadeInUp">
+    <!-- <h1>Reward Schedule</h1> -->
+    <br>
+    <thead>
+    
+    </thead>
+    <tbody>
+      
+      <!-- <h2 class="text-center mb-5 animateMe" data-animation="fadeInUp">REWARD SCHEDULE</h2> -->
+        <tr>
+            <td><h1>Block #</h1></td>
+            <td><h1>Reward</h1></td>
+            <td><h1>PoS</h1></td>
+            <td><h1>Masternodes</h1></td>
+          </tr>
+        
+      <tr>
+        <td>100 - 1000</td>
+        <td>31 ALTC</td>
+        <td>20%</td>
+        <td>80%</td>
+      </tr>
+      <tr>
+        <td>1001 - 10000 </td>
+        <td>35 ALTC</td>
+        <td>20%</td>
+        <td>80%</td>
+      </tr>
+      <tr>
+        <td>10001 - 30000</td>
+        <td>20 ALTC</td>
+        <td>20%</td>
+        <td>80%</td>
+      </tr>
+      <tr>
+        <td>30001 - 50000</td>
+        <td>18 ALTC</td>
+        <td>20%</td>
+        <td>80%</td>
+      </tr>
+      <tr>
+        <td>50001 - 70000</td>
+        <td>16 ALTC</td>
+        <td>20%</td>
+        <td>80%</td>
+      </tr>
+      <tr>
+        <td>70001 - 90000</td>
+        <td>14 ALTC</td>
+        <td>20%</td>
+        <td>80%</td>
+      </tr>
+      <tr>
+        <td>90001 - 10000</td>
+        <td>12 ALTC</td>
+        <td>20%</td>
+        <td>80%</td>
+      </tr>
+      <tr>
+        <td>100001 - 130000</td>
+        <td>10 ALTC</td>
+        <td>20%</td>
+        <td>80%</td>
+      </tr>
+      <tr>
+        <td>130001 - 170000</td>
+        <td>8 ALTC</td>
+        <td>20%</td>
+        <td>80%</td>
+      </tr>
+      <tr>
+        <td>170001+</td>
+        <td>5 ALTC</td>
+        <td>20%</td>
+        <td>80%</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- END Table -->
+</div>
+</div>
+
+<!-- ROADMAP -->
+
+<div class="container">
+  
+<div id="roadmap" class="animateMe" data-animation="fadeInUp">
+    <div class="row mb-5"
+      ><div class="col-12"
+        ><h2 class="text-center mb-5">ROADMAP</h2></div
+      ></div
+    ><div
+      class="aos-init aos-animate"
+      id="roadmap-content"
+      data-aos="zoom-in-up"
+      ><div class="container"
+        ><div class="row"
+          ><div class="col"
+            ><div class="badge">Q4 2019</div
+            ><ul
+              ><li class="active">Mainnet Launch</li>
+              <li class="active">Alpha Launch</li>
+              <li class="active">Project Announcement</li>
+              <li class="active">Beta Development</li>
+              <li class="active">Crowdfunding Phase</li>
+              <li class="">Exchange Listings</li>
+              <li class="">Poker App</li>
+             
+           
+            </ul>
+           
+            
+            </div
+          ><div class="col"
+            ><div class="badge">Q1 2020</div
+            ><ul
+              ><li class="">Leaderboard Rewards</li
+              ><li class="">PvP Betting</li
+              ><li class="">Cross-platform Light Wallets</li
+              ><li class="">Additional Betting Games</li
+              ><li class="">E-sports Betting</li
+              ><li class="">Sports Betting</li
+              ><li class="">Online Gaming Betting Portal </li></ul
+            ></div
+          ><div class="col"
+            ><div class="badge">Q2 2020</div
+            ><ul
+              ><li class="">Marketing Campaign</li
+              ><li class="">Mobile Betting Apps</li
+              ><li class="">Larger Exchange Listings</li>
+              <li class="">Whitepaper 2.0</li>
+              <li class="">Roadmap 2.0</li>
+              </ul
+            ></div
+          ><div class="col"
+            ><div class="badge">Q3 2020</div
+            ><ul
+              ><li class="">Add additional payment options</li
+              ><li class="">Whitelabel Services</li
+              ><li class="">Major Forum Platform Promotion</li
+              ><li class="">Platform Redesign</li>
+              <li class="">Open Request Betting Platform</li>
+              </ul
+            ></div
+          ><div class="col"
+            ><div class="badge">Q4 2020</div
+            ><ul
+              ><li class=""></li
+              ><li class="">Wallet Redisgn</li
+              ><li class="">Annual Blockchain Revision</li>
+              <li class="">Update Blockchain with latest BIP</li>
+              </ul
+            ></div
+          ></div
+        ></div
+      ></div
+    ></div
+  >
+  <!--  END ROADMAP -->
+</div>
+
+<!-- END Body Content Sections -->
+  
+<!-- Side Icon Bar-->
+  <div class="icon_bar">
+    <a target="_blank" href="https://discord.gg/934agSA"
+      ><img src="/static/images/discord.svg" />
+    </a>
+    <br />
+    <a target="_blank" href="https://twitter.com/AltCasino"
+      ><img src="/static/images/twitter.svg"/></a
+    ><br />
+    <a target="_blank" href="#"
+      ><img src="/static/images/telegram.svg"/></a
+    ><br />
+    <a target="_blank" href="https://medium.com/@altcasinoteam"
+      ><img src="/static/images/medium.svg"/></a
+    ><br />
+    
+    <a target="_blank" href="https://github.com/PythonKoder/altcasino/releases"
+      ><img src="/static/images/github.svg"/></a
+    ><br />
+ 
+  </div>
+  
+<!-- END Side Icon Bar-->
+
+ 
+<!-- Footer -->
+<footer>
+  <div class="footer-bottom foot-center">
+    Copyright&copy; 2019 | AltCasino
+  </div>
+</footer>
+
+    <!-- JavaScript Links -->
+   
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.js"
+      integrity="sha256-kRbW+SRRXPogeps8ZQcw2PooWEDPIjVQmN1ocWVQHRY="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"
+      integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- JQuery -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+    ></script>
+    <!-- Bootstrap tooltips -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"
+    ></script>
+    <!-- Bootstrap core JavaScript -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"
+    ></script>
+    <!-- MDB core JavaScript -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"
+    ></script>
+    <!-- fullpage.js -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.7/fullpage.min.js"
+    ></script>
+    <!-- Native JS -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js" integrity="sha256-w49DIDk8itgSjjuoof5lTxYKwcjWJ7Z2sRW3nU1StNA=" crossorigin="anonymous"></script>
+
+    
+  <script>
+
+    // TypE EFFECT
+document.addEventListener("DOMContentLoaded", function(event) {
+  // array with texts to type in typewriter
+  var dataText = ["Fun", "Secure", "Fair"];
+
+  // type one text in the typwriter
+  // keeps calling itself until the text is finished
+  function typeWriter(text, i, fnCallback) {
+    // chekc if text isn't finished yet
+    if (i < text.length) {
+      // add next character to h1
+      document.querySelector("#typed").innerHTML =
+        text.substring(0, i + 1) + '<span aria-hidden="true"></span>';
+
+      // wait for a while and call this function again for next character
+      setTimeout(function() {
+        typeWriter(text, i + 1, fnCallback);
+      }, 100);
+    }
+    // text finished, call callback if there is a callback function
+    else if (typeof fnCallback == "function") {
+      // call callback after timeout
+      setTimeout(fnCallback, 700);
+    }
+  }
+  // start a typewriter animation for a text in the dataText array
+  function StartTextAnimation(i) {
+    if (typeof dataText[i] == "undefined") {
+      setTimeout(function() {
+        StartTextAnimation(0);
+      }, 2000);
+    }
+    // check if dataText[i] exists
+    if (i < dataText[i].length) {
+      // text exists! start typewriter animation
+      typeWriter(dataText[i], 0, function() {
+        // after callback (and whole text has been animated), start next text
+        StartTextAnimation(i + 1);
+      });
+    }
+  }
+
+  // start the text animation
+  StartTextAnimation(0);
+});
+
+// Fade in Animation
+  
+  function scrollWaypointInit(items, trigger) {
+  items.each(function() {
+    var element = $(this),
+      osAnimationClass = element.data("animation"),
+      osAnimationDelay = element.attr("data-animation-delay");
+
+    element.css({
+      "-webkit-animation-delay": osAnimationDelay,
+      "-moz-animation-delay": osAnimationDelay,
+      "animation-delay": osAnimationDelay
+    });
+
+    var trigger = trigger ? trigger : element;
+
+    trigger.waypoint(
+      function() {
+        element.addClass("animated").addClass(osAnimationClass);
+      },
+      {
+        triggerOnce: true,
+        offset: "80%"
+      }
+    );
+  });
+}
+
+//Call the init
+
+    $(document).ready(function() {
+       $('#fadeMeIn').hide();
+    });
+
+    $(document).ready(function() {
+       $('#fadeMeIn').fadeIn(2000);
+    });
+
+
+$(document).ready(function() {
+  scrollWaypointInit($(".animateMe"));
+});
+    
+
+var util = {
+  mobileMenu() {
+    $("#nav").toggleClass("nav-visible");
+  },
+  windowResize() {
+    if ($(window).width() > 800) {
+      $("#nav").removeClass("nav-visible");
+    }
+  },
+  scrollEvent() {
+    var scrollPosition = $(document).scrollTop();
+
+    $.each(util.scrollMenuIds, function(i) {
+      var link = util.scrollMenuIds[i],
+        container = $(link).attr("href"),
+        containerOffset = $(container).offset().top,
+        containerHeight = $(container).outerHeight(),
+        containerBottom = containerOffset + containerHeight;
+
+      if (
+        scrollPosition < containerBottom + 75 &&
+        scrollPosition >= containerOffset - 100
+      ) {
+        $(link).addClass("active");
+      } else {
+        $(link)
+        .delay('slow')
+        .removeClass("active");
+      }
+    });
+  }
+};
+
+$(document).ready(function() {
+  util.scrollMenuIds = $("a.nav-link[href]");
+  $("#menu").click(util.mobileMenu);
+  $(window).resize(util.windowResize);
+  $(document).scroll(util.scrollEvent);
+});
+
+// document.querySelector("body > div.icon_bar");
+
+
+
+
+    </script>
+
+   
+  </body>
+</html>

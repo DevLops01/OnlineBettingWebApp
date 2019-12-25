@@ -1,0 +1,479 @@
+{% extends "layout.html" %} {% block content %}
+
+<div id="bjapp" class="bjapp">
+  <div id="cardTable" class="cardTable">
+    Dealer
+    <div id="dealerCards">
+      <div id="dcard0" class="dealtCards" style="display:none;"></div>
+      <div id="dcard1" class="dealtCards" style="display:none;"></div>
+      <div id="dcard2" class="dealtCards" style="display:none;"></div>
+      <div id="dcard3" class="dealtCards" style="display:none;"></div>
+      <div id="dcard4" class="dealtCards" style="display:none;"></div>
+      <div id="dcard5" class="dealtCards" style="display:none;"></div>
+      <div id="dtotal" class="pndtotal" style="display:none;"></div>
+    </div>
+    Player
+    <div id="playerCards">
+      <div id="pcard0" class="dealtCards" style="display:none;"></div>
+      <div id="pcard1" class="dealtCards" style="display:none;"></div>
+      <div id="pcard2" class="dealtCards" style="display:none;"></div>
+      <div id="pcard3" class="dealtCards" style="display:none;"></div>
+      <div id="pcard4" class="dealtCards" style="display:none;"></div>
+      <div id="pcard5" class="dealtCards" style="display:none;"></div>
+
+      <div id="ptotal" class="pndtotal" style="display:none;"> </div>
+    </div>
+    <p id="userbalance" class="balance bjbalance"> BALANCE: {{ balance }}</p>
+  </div>
+
+  <div id="bjmarkers">
+    <form id="betForm" action="">
+      Bet Amount
+      <div>
+        <!-- prettier-ignore -->
+        <input
+          autocomplete="off"
+          class="BetAmount"
+          id="Bbet"
+          type="number"
+          step="0.1"
+          value="10"
+        />
+      </div>
+      <div>
+        <button id="bhalf" class="changeButtons">1/2</button>
+        <button id="btime2" class="changeButtons">2X</button>
+        <button id="bmax" class="changeButtons">MAX</button>
+        <br />
+        <button
+          name="newgame"
+          type="submit"
+          class="btn submitButton tails"
+          id="newgame"
+          value="newgame"
+          >Deal</button
+        >
+      </div>
+    </form>
+    <!-- prettier-ignore -->
+    <button name="double" type="submit" class="btn submitButton tails" id="double" value="double" style="display:none;">2X Bet</button>
+    <!-- prettier-ignore -->
+    <button name="stand" type="submit" class="btn submitButton heads" id="stand" value="stand" style="display:none;">Stand</button>
+    <!-- prettier-ignore -->
+    <button name="hit" type="submit" class="btn submitButton tails" id="hit" value="hit" style="display:none;">Hit</button>
+    <!-- prettier-ignore -->
+  </div>
+
+  <!-- prettier-ignore -->
+
+  <div id="successAlert" class="alert alert-success" role="alert" style="display:none;"></div>
+  <!-- prettier-ignore -->
+  <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>
+  <!-- Javascript -->
+</div>
+{% endblock content %}
+<!-- prettier-ignore -->
+{% block script %}
+
+<script>
+  $(document).ready(function() {
+    var socket = io.connect("http://127.0.0.1:5000");
+    $("#bhalf").on("click", function(e) {
+      e.preventDefault();
+      half = $("#Bbet").val() / 2;
+      $("#Bbet").val(half);
+      bet = $("#Bbet").val();
+      console.log(bet);
+      return bet;
+    });
+
+    $("#btime2").on("click", function(e) {
+      e.preventDefault();
+      time2 = $("#Bbet").val() * 2;
+      $("#Bbet").val(time2);
+      var bet = $("#Bbet").val();
+      console.log(bet);
+      var max = 150;
+      if (bet > max) {
+        let bet = $("#Bbet").val("150");
+      }
+      return bet;
+    });
+    $("#bmax").on("click", function(e) {
+      e.preventDefault();
+      $("#Bbet").val("150");
+      console.log(bet);
+      return bet;
+    });
+
+    $("#betForm").on("submit", function(e) {
+      setTimeout(function getbal() {
+        $.get("/processget", function(data) {
+          $("#userbalance").text("BALANCE: " + data.increase);
+        });
+      }, 500);
+      e.preventDefault();
+      bet = $("#Bbet").val();
+      var newgame = $("#newgame").val();
+      var data = { ready: newgame, amount: bet };
+      JSON.stringify(data);
+      e.preventDefault();
+      socket.emit("play", data);
+      $("#stand").show("slow");
+      $("#hit").show("slow");
+      $("#double").show();
+      $("#newgame").hide("slow");
+    });
+
+    socket.on("drawnCards", function(cards) {
+      if (cards.dcard1) {
+        $("#dcard0").hide();
+        $("#dcard1").hide();
+        $("#dcard2").hide();
+        $("#dcard3").hide();
+        $("#dcard4").hide();
+        $("#dcard5").hide();
+        $("#dcard1")
+          .fadeIn()
+          .text(cards.dcard1);
+      }
+      if (cards.dcard0 && cards.dcard1) {
+        $("#dcard0")
+          .show()
+          .text(cards.dcard0);
+        $("#dcard1")
+          .show()
+          .text(cards.dcard1);
+      }
+      if (cards.dcard0 && cards.dcard1 && cards.dcard2) {
+        $("#dcard0")
+          .show()
+          .text(cards.dcard0);
+        $("#dcard1")
+          .show()
+          .text(cards.dcard1);
+        $("#dcard2")
+          .show()
+          .text(cards.dcard2);
+      }
+      if (cards.dcard0 && cards.dcard1 && cards.dcard2 && cards.dcard3) {
+        $("#dcard0")
+          .show()
+          .text(cards.dcard0);
+        $("#dcard1")
+          .show()
+          .text(cards.dcard1);
+        $("#dcard2")
+          .show()
+          .text(cards.dcard2);
+        $("#dcard3")
+          .show()
+          .text(cards.dcard3);
+      }
+      if (
+        cards.dcard0 &&
+        cards.dcard1 &&
+        cards.dcard2 &&
+        cards.dcard3 &&
+        cards.dcard4
+      ) {
+        $("#dcard0")
+          .show()
+          .text(cards.dcard0);
+        $("#dcard1")
+          .show()
+          .text(cards.dcard1);
+        $("#dcard2")
+          .show()
+          .text(cards.dcard2);
+        $("#dcard3")
+          .show()
+          .text(cards.dcard3);
+        $("#dcard4")
+          .show()
+          .text(cards.dcard4);
+      }
+      if (
+        cards.dcard0 &&
+        cards.dcard1 &&
+        cards.dcard2 &&
+        cards.dcard3 &&
+        cards.dcard4 &&
+        cards.dcard5
+      ) {
+        $("#dcard0")
+          .show()
+          .text(cards.dcard0);
+        $("#dcard1")
+          .show()
+          .text(cards.dcard1);
+        $("#dcard2")
+          .show()
+          .text(cards.dcard2);
+        $("#dcard3")
+          .show()
+          .text(cards.dcard3);
+        $("#dcard4")
+          .show()
+          .text(cards.dcard4);
+        $("#dcard5")
+          .show()
+          .text(cards.dcard5);
+      }
+      $("#dtotal")
+        .show()
+        .text(cards.dtotal);
+
+      if (cards.pcard0 && cards.pcard1) {
+        $("#pcard0").hide();
+        $("#pcard1").hide();
+        $("#pcard2").hide();
+        $("#pcard3").hide();
+        $("#pcard4").hide();
+        $("#pcard5").hide();
+        $("#pcard0")
+          .fadeIn()
+          .text(cards.pcard0);
+        $("#pcard1")
+          .fadeIn()
+          .text(cards.pcard1);
+        $("#double").show();
+      }
+      if (cards.pcard0 && cards.pcard1 && cards.pcard2) {
+        $("#pcard0").text(cards.pcard0);
+        $("#pcard1").text(cards.pcard1);
+        $("#pcard2")
+          .show()
+          .text(cards.pcard2);
+        $("#double").hide();
+      }
+      if (cards.pcard0 && cards.pcard1 && cards.pcard2 && cards.pcard3) {
+        $("#pcard0")
+          .show()
+          .text(cards.pcard0);
+        $("#pcard1")
+          .show()
+          .text(cards.pcard1);
+        $("#pcard2")
+          .show()
+          .text(cards.pcard2);
+        $("#pcard3")
+          .show()
+          .text(cards.pcard3);
+      }
+      if (
+        cards.pcard0 &&
+        cards.pcard1 &&
+        cards.pcard2 &&
+        cards.pcard3 &&
+        cards.pcard4
+      ) {
+        $("#pcard0")
+          .show()
+          .text(cards.pcard0);
+        $("#pcard1")
+          .show()
+          .text(cards.pcard1);
+        $("#pcard2")
+          .show()
+          .text(cards.pcard2);
+        $("#pcard3")
+          .show()
+          .text(cards.pcard3);
+        $("#pcard4")
+          .show()
+          .text(cards.pcard4);
+      }
+      if (
+        cards.pcard0 &&
+        cards.pcard1 &&
+        cards.pcard2 &&
+        cards.pcard3 &&
+        cards.pcard4 &&
+        cards.pcard5
+      ) {
+        $("#pcard0")
+          .show()
+          .text(cards.pcard0);
+        $("#pcard1")
+          .show()
+          .text(cards.pcard1);
+        $("#pcard2")
+          .show()
+          .text(cards.pcard2);
+        $("#pcard3")
+          .show()
+          .text(cards.pcard3);
+        $("#pcard4")
+          .show()
+          .text(cards.pcard4);
+        $("#pcard5")
+          .show()
+          .text(cards.pcard5);
+      }
+
+      $("#ptotal")
+        .show()
+        .text(cards.ptotal);
+    });
+
+    socket.on("busted", function(msg) {
+      $("#stand").hide();
+      $("#hit").hide();
+      $("#double").hide();
+      $("#newgame").show("slow");
+      setTimeout(function getbal() {
+        $.get("/processget", function(data) {
+          $("#userbalance").text("BALANCE: " + data.increase);
+        });
+      }, 1000);
+
+      if (msg) {
+        document.getElementById("newgame").disabled = true;
+        function enableB() {
+          document.getElementById("newgame").disabled = false;
+        }
+        setTimeout(enableB, 3000);
+        $("#errorAlert")
+          .fadeIn("slow")
+          .text(msg.busted)
+          .delay("slow")
+          .fadeOut("slow");
+      }
+    });
+
+    socket.on("winner", function(data) {
+      document.getElementById("newgame").disabled = true;
+      function enableB() {
+        document.getElementById("newgame").disabled = false;
+      }
+      setTimeout(enableB, 3000);
+      setTimeout(function getbal() {
+        $.get("/processget", function(data) {
+          $("#userbalance").text("BALANCE: " + data.increase);
+        });
+      }, 1000);
+      $("#errorAlert").hide();
+      $("#successAlert")
+        .delay("slow")
+        .fadeIn()
+        .delay("slow")
+        .fadeOut();
+      $("#successAlert").text(data.won);
+      // $("#successAlert")
+      //   .delay(3000)
+      //   .hide("slow");
+    });
+    socket.on("loser", function(data) {
+      document.getElementById("newgame").disabled = true;
+      function enableB() {
+        document.getElementById("newgame").disabled = false;
+      }
+      setTimeout(enableB, 3000);
+      setTimeout(function getbal() {
+        $.get("/processget", function(data) {
+          $("#userbalance").text("BALANCE: " + data.increase);
+        });
+      }, 1000);
+      $("#successAlert").hide();
+      $("#errorAlert")
+        .delay("slow")
+        .fadeIn("slow")
+        .delay("slow")
+        .fadeOut("slow");
+      $("#errorAlert").text(data.lost);
+      // $("#errorAlert")
+      //   .delay(3000)
+      //   .hide("slow");
+    });
+    socket.on("tie", function(data) {
+      document.getElementById("newgame").disabled = true;
+      function enableB() {
+        document.getElementById("newgame").disabled = false;
+      }
+      setTimeout(enableB, 3000);
+      setTimeout(function getbal() {
+        $.get("/processget", function(data) {
+          $("#userbalance").text("BALANCE: " + data.increase);
+        });
+      }, 1000);
+      $("#successAlert")
+        .delay("slow")
+        .fadeIn()
+        .delay("slow")
+        .fadeOut()
+        .text(data.tie);
+    });
+
+    $("#double").on("click", function(e) {
+      setTimeout(function getbal() {
+        $.get("/processget", function(data) {
+          $("#userbalance").text("BALANCE: " + data.increase);
+        });
+      }, 1000);
+      e.preventDefault();
+      var double = $("#double").val();
+      var data = { double: double };
+      JSON.stringify(data);
+      socket.emit("double", data);
+      $("#double").hide();
+    });
+
+    $("#hit").on("click", function() {
+      var hit = $("#hit").val();
+      var data = { didHit: hit };
+      JSON.stringify(data);
+      socket.emit("hit", data);
+    });
+
+    $("#stand").on("click", function() {
+      setTimeout(function getbal() {
+        $.get("/processget", function(data) {
+          $("#userbalance").text("BALANCE: " + data.increase);
+        });
+      }, 1000);
+      var stand = $("#stand").val();
+      var data = { didStand: stand };
+      JSON.stringify(data);
+      socket.emit("stand", data);
+      $("#dealerCards").text(data.dealer);
+      $("#stand").hide("slow");
+      $("#hit").hide("slow");
+      $("#double").hide();
+      $("#newgame").show("slow");
+    });
+  });
+
+  setTimeout(function getbal() {
+    $.get("/processget", function(data) {
+      $("#userbalance").text("BALANCE: " + data.increase);
+    });
+  }, 1000);
+
+  $(document).ready(function() {
+    var printout = document.getElementById("Bbet").value;
+    var bal = "{{ balance}}";
+    if (bal <= 0) {
+      document.getElementById("newgame").disabled = true;
+    }
+    if (printout <= 0) {
+      document.getElementById("newgame").disabled = true;
+    }
+  });
+
+  $("#Bbet").keyup(function() {
+    var printout = document.getElementById("Bbet").value;
+    var bal = "{{ balance}}";
+    var max = 150;
+    if (printout > max) {
+      $("#Bbet").val("150");
+    }
+    if (printout <= 0 || bal <= 0) {
+      document.getElementById("newgame").disabled = true;
+    } else {
+      document.getElementById("newgame").disabled = false;
+    }
+  });
+</script>
+
+{% endblock script %}

@@ -1,0 +1,344 @@
+{% extends "dlayout.html" %} {% block content %}
+<div class="BalanceBanner">
+  {% if not current_user.is_authenticated %}
+  <div>Demo Mode</div>
+  {% endif %}
+  <h1 id="userbalance" class="balance"> BALANCE: {{ balance }}</h1>
+</div>
+
+<!-- <div class="slotcol"> -->
+<div class="row slotrow">
+  <!-- <div class="col-sm-3 col-xs-4"> -->
+  <div class="slotbox">
+    <div class="slotX">
+      <p id="reel1">
+        <i id="rocket1" class="fas fa-rocket fa-3x" style="display:none;"></i>
+        <i id="bitcoin1" class="fab fa-bitcoin fa-3x" style="display:none;"></i>
+        <i id="coins1" class="fab fa-ethereum fa-3x" style="display:none;"></i>
+        <i id="gem1" class="fas fa-gem fa-3x" style="display:none;"></i>
+      </p>
+    </div>
+  </div>
+  <!-- </div> -->
+  <!-- <div class="col-sm-3 col-xs-4"> -->
+  <div class="slotbox">
+    <div class="slotX">
+      <p id="reel2">
+        <i id="rocket2" class="fas fa-rocket fa-3x" style="display:none;"></i>
+        <i id="bitcoin2" class="fab fa-bitcoin fa-3x" style="display:none;"></i>
+        <i id="coins2" class="fab fa-ethereum fa-3x" style="display:none;"></i>
+        <i id="gem2" class="fas fa-gem fa-3x" style="display:none;"></i>
+      </p>
+    </div>
+  </div>
+  <!-- </div> -->
+  <!-- <div class="col-sm-3 col-xs-4"> -->
+  <div class="slotbox">
+    <div class="slotX">
+      <p id="reel3">
+        <i id="rocket3" class="fas fa-rocket fa-3x" style="display:none;"></i>
+        <i id="bitcoin3" class="fab fa-bitcoin fa-3x" style="display:none;"></i>
+        <i id="coins3" class="fab fa-ethereum fa-3x" style="display:none;"></i>
+        <i id="gem3" class="fas fa-gem fa-3x" style="display:none;"></i>
+      </p>
+    </div>
+  </div>
+  <!-- </div> -->
+</div>
+<!-- </div> -->
+
+<div class="slotButtons">
+  <form id="slotForm" action="">
+    <input
+      autocomplete="off"
+      class="BetAmount"
+      id="Sbet"
+      type="number"
+      step="0.5"
+      value="10"
+    />
+
+    <div>
+      <button id="Shalf" class="changeButtons">1/2</button>
+      <button id="Stime2" class="changeButtons">2X</button>
+      <button id="Smax" class="changeButtons">MAX</button>
+      <br />
+      <button
+        name="roll"
+        type="submit"
+        class="btn submitButton tails"
+        id="spin"
+        value="spin"
+        >Spin</button
+      >
+    </div>
+  </form>
+</div>
+
+<div class="row legend">
+  <div class="legendP">
+    <div id="glegend" class="glegend">
+      <i class="fas fa-gem"></i>
+      <br />1X <br />Max Payout 150
+    </div>
+  </div>
+  <div class="legendP">
+    <div class="blegend">
+      <i class="fab fa-bitcoin"></i>
+      <i class="fab fa-bitcoin"></i>
+      <br />2X <br />
+      Max Payout 300
+    </div>
+  </div>
+
+  <div class="legendP">
+    <div id="rlegend" class="rlegend">
+      <i class="fas fa-rocket"></i>
+      <i class="fas fa-rocket"></i>
+      <i class="fas fa-rocket"></i>
+      <br />3X <br />
+      Max Payout 450
+    </div>
+  </div>
+  <div class="legendP">
+    <div class="blegend">
+      <i class="fab fa-bitcoin"></i>
+      <i class="fab fa-bitcoin"></i>
+      <i class="fab fa-bitcoin"></i>
+      <br />4X <br />
+      Max Payout 600
+    </div>
+  </div>
+  <div class="legendP">
+    <div class="elegend">
+      <i class="fab fa-ethereum"></i>
+      <i class="fab fa-ethereum"></i>
+      <i class="fab fa-ethereum"></i>
+      <br />5X <br />
+      Max Payout 750
+    </div>
+  </div>
+  <div class="legendP">
+    <div class="glegend">
+      <i class="fas fa-gem"></i>
+      <i class="fas fa-gem"></i>
+      <i class="fas fa-gem"></i>
+      <br />10X <br />
+      Max Payout 1500
+    </div>
+  </div>
+</div>
+
+<!-- prettier-ignore -->
+<div id="successAlert" class="alert alert-success" role="alert" style="display:none;"></div>
+<!-- prettier-ignore -->
+<div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>
+
+{% endblock content %} {% block script %}
+<script>
+  $(document).ready(function() {
+    $("#Shalf").on("click", function(e) {
+      e.preventDefault();
+      half = $("#Sbet").val() / 2;
+      $("#Sbet").val(half);
+    });
+
+    $("#Stime2").on("click", function(e) {
+      e.preventDefault();
+      time2 = $("#Sbet").val() * 2;
+      $("#Sbet").val(time2);
+      var bet = $("#Sbet").val();
+      console.log(bet);
+      var max = 150;
+      if (bet > max) {
+        let bet = $("#Sbet").val("150");
+      }
+      return bet;
+    });
+
+    $("#Smax").on("click", function(e) {
+      e.preventDefault();
+      $("#Sbet").val("150");
+      console.log(bet);
+      return bet;
+    });
+  });
+
+  $(document).ready(function() {
+    $("#slotForm").on("submit", function(e) {
+      e.preventDefault();
+      document.getElementById("spin").disabled = true;
+      function enableB() {
+        document.getElementById("spin").disabled = false;
+      }
+      setTimeout(enableB, 3500);
+      $("#successAlert").hide();
+      $("#errorAlert").hide();
+      $("#rocket1").hide();
+      $("#bitcoin1").hide();
+      $("#coins1").hide();
+      $("#gem1").hide();
+      //
+      $("#rocket2").hide();
+      $("#bitcoin2").hide();
+      $("#coins2").hide();
+      $("#gem2").hide();
+      //
+      $("#rocket3").hide();
+      $("#bitcoin3").hide();
+      $("#coins3").hide();
+      $("#gem3").hide();
+      $.ajax({
+        data: {
+          bet: $("#Sbet").val()
+        },
+        type: "POST",
+        url: "/slotprocess"
+      }).done(function(data) {
+        if (data.error) {
+          $("#errorAlert")
+            .fadeIn()
+            .text(data.error)
+            .delay(1000)
+            .fadeOut();
+        }
+        if (data.loser) {
+          $("#errorAlert")
+            .delay(2000)
+            .fadeIn()
+            .text(data.loser)
+            .delay(1000)
+            .fadeOut();
+        }
+        if (data.winner) {
+          $("#successAlert")
+            .delay(2000)
+            .fadeIn()
+            .text(data.winner)
+            .delay(1000)
+            .fadeOut();
+        }
+        if (data.reel1) {
+          if (data.reel1 == "A") {
+            $("#rocket1")
+              .delay(500)
+              .fadeIn();
+            $("#bitcoin1").hide();
+            $("#coins1").hide();
+            $("#gem1").hide();
+          } else if (data.reel1 == "B") {
+            $("#rocket1").hide();
+            $("#bitcoin1")
+              .delay(500)
+              .fadeIn();
+            $("#coins1").hide();
+            $("#gem1").hide();
+          } else if (data.reel1 == "C") {
+            $("#rocket1").hide();
+            $("#bitcoin1").hide();
+            $("#coins1")
+              .delay(500)
+              .fadeIn();
+            $("#gem1").hide();
+          } else if (data.reel1 == "D") {
+            $("#rocket1").hide();
+            $("#bitcoin1").hide();
+            $("#coins1").hide();
+            $("#gem1")
+              .delay(500)
+              .fadeIn();
+          }
+        }
+        if (data.reel2) {
+          if (data.reel2 == "A") {
+            $("#rocket2")
+              .delay(1000)
+              .fadeIn();
+            $("#bitcoin2").hide();
+            $("#coins2").hide();
+            $("#gem2").hide();
+          } else if (data.reel2 == "B") {
+            $("#rocket2").hide();
+            $("#bitcoin2")
+              .delay(1000)
+              .fadeIn();
+            $("#coins2").hide();
+            $("#gem2").hide();
+          } else if (data.reel2 == "C") {
+            $("#rocket2").hide();
+            $("#bitcoin2").hide();
+            $("#coins2")
+              .delay(1000)
+              .fadeIn();
+            $("#gem2").hide();
+          } else if (data.reel2 == "D") {
+            $("#rocket2").hide();
+            $("#bitcoin2").hide();
+            $("#coins2").hide();
+            $("#gem2")
+              .delay(1000)
+              .fadeIn();
+          }
+        }
+        if (data.reel3) {
+          if (data.reel3 == "A") {
+            $("#rocket3")
+              .delay(2000)
+              .fadeIn();
+            $("#bitcoin3").hide();
+            $("#coins3").hide();
+            $("#gem3").hide();
+          } else if (data.reel3 == "B") {
+            $("#rocket3").hide();
+            $("#bitcoin3")
+              .delay(2000)
+              .fadeIn();
+            $("#coins3").hide();
+            $("#gem3").hide();
+          } else if (data.reel3 == "C") {
+            $("#rocket3").hide();
+            $("#bitcoin3").hide();
+            $("#coins3")
+              .delay(2000)
+              .fadeIn();
+            $("#gem3").hide();
+          } else if (data.reel3 == "D") {
+            $("#rocket3").hide();
+            $("#bitcoin3").hide();
+            $("#coins3").hide();
+            $("#gem3")
+              .delay(2000)
+              .fadeIn();
+          }
+        }
+      });
+      setTimeout(function getbal() {
+        $.get("/processget", function(data) {
+          $("#userbalance").text("BALANCE: " + data.increase);
+        });
+      }, 3000);
+    });
+  });
+
+  $(document).ready(function() {
+    var printout = "{{ balance }}";
+    if (printout <= 0) {
+      document.getElementById("spin").disabled = true;
+    }
+  });
+
+  $("#Sbet").keyup(function() {
+    var printout = document.getElementById("Sbet").value;
+    var bal = "{{ balance}}";
+    var max = 150;
+    if (printout > max) {
+      $("#Sbet").val("150");
+    }
+    if (printout <= 0 || bal <= 0) {
+      document.getElementById("spin").disabled = true;
+    } else {
+      document.getElementById("spin").disabled = false;
+    }
+  });
+</script>
+{% endblock script %}

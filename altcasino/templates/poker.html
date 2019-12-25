@@ -1,0 +1,339 @@
+{% extends "playout.html" %}
+
+{% block content %}
+
+
+
+<div class="wrap">
+    <button class="toLobby">Return <br> to <br> Lobby</button>
+  <div id="poker_table" class="poker-table" data-uid="">
+    <div class="tableLogo">alt<span>Casino</span> </div>
+    
+
+    <div id="seat1" value=1 class="seat">
+      {% if seat1pic == 'none' %}
+        <img id="avi1" style="display:none;">
+        <div class=" modal fade" id="BuyIn1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="buyinModal modal-content">
+                <div class="myHeader modal-header">
+                  <h5 class="modal-title">BUY IN <br> Min-200 / Max-1000</h5>
+                  <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+                    <!-- <span aria-hidden="true">&times;</span>
+                  </button> -->
+                </div>
+                <form action="">
+                <div class="modal-body">
+                  
+                    <h5>Balance: {{current_user.balance}}</h5>
+                    <h5>Amount</h5><input id="boughtAmount1" type="number">
+                    {% if current_user.balance < 20000 %}
+                    <div><br><h5>DEPOSIT</h5> <span class="address">{{current_user.address}}</span></div>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                  <button id="closeCancel1" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <button id="boughtChips1" type="button" class="btn btn-primary">Buy In</button>
+                </div>
+              </form>
+              </div>
+            </div>
+          </div>
+      {% else %}
+      <img id="avi1" src={{seat1pic}}>
+      {% endif %}
+        <div class="chair">
+        <span id="seat1Avi">
+          <i id="chair1" class="fas fa-chair fa-2x"></i>
+        </span></div>
+      <div class="holecards">
+        <!-- <div class="card holecard1"></div>
+      <div class="card holecard2"></div> -->
+      </div>
+      <div class="name-chips">
+        <div class="player-name"><p id='username1'>{{seat1}}</p></div>
+        <div id="chips" style="display:none;"></div>
+      </div>
+      <div class="bet"></div>
+    </div>
+    <div id="seat2" value=2 class="seat">
+        {% if seat2pic == 'none' %}
+        <img id="avi2" style="display:none;">
+        {% else %}
+        <img id="avi2" src={{seat2pic}}>
+        {% endif %}
+        <div class="chair"><i class="fas fa-chair fa-2x"></i></div>
+      <div class="holecards">
+        <!-- <div class="card holecard1"></div>
+      <div class="card holecard2"></div> -->
+      </div>
+      <div class="name-chips">
+        <div class="player-name"><p id='username2'>{{seat2}}</p></div>
+        <div class="chips"></div>
+      </div>
+      <div class="bet"></div>
+    </div>
+    <div id="seat3" value=3 class="seat">
+        {% if seat3pic == 'none' %}
+        <img id="avi3" style="display:none;">
+        {% else %}
+        <img id="avi3" src={{seat3pic}}>
+        {% endif %}
+        <div class="chair"><i class="fas fa-chair fa-2x"></i></div>
+      <div class="holecards">
+        <!-- <div class="card holecard1"></div>
+      <div class="card holecard2"></div> -->
+      </div>
+      <div class="name-chips">
+          <div class="player-name"><p id='username3'>{{seat3}}</p></div>
+        <div class="chips"></div>
+      </div>
+      <div class="bet"></div>
+    </div>
+    <div id="seat4" value=4 class="seat">
+        {% if seat4pic == 'none' %}
+        <img id="avi4" style="display:none;">
+        {% else %}
+        <img id="avi4" src={{seat4pic}}>
+        {% endif %}
+        <div class="chair"><i class="fas fa-chair fa-2x"></i></div>
+      <div class="holecards">
+        <!-- <div class="card holecard1"></div>
+      <div class="card holecard2"></div> -->
+      </div>
+      <div class="name-chips">
+          <div class="player-name"><p id='username4'>{{seat4}}</p></div>
+        <div class="chips"></div>
+      </div>
+      <div class="bet"></div>
+    </div>
+    <div id="seat5" value=5 class="seat">
+        {% if seat5pic == 'none' %}
+        <img id="avi5" style="display:none;">
+        {% else %}
+        <img id="avi4" src={{seat5pic}}>
+        {% endif %}
+        <div class="chair"><i class="fas fa-chair fa-2x"></i></div>
+      <div class="holecards">
+        <!-- <div class="card holecard1"></div>
+      <div class="card holecard2"></div> -->
+      </div>
+      <div class="name-chips">
+          <div class="player-name"><p id='username5'>{{seat5}}</p></div>
+        <div class="chips"></div>
+      </div>
+      <div class="bet"></div>
+    </div>
+    <div id="seat6" value=6 class="seat">
+        {% if seat6pic == 'none' %}
+        <img id="avi6" style="display:none;">
+        {% else %}
+        <img id="avi6" src={{seat6pic}}>
+        {% endif %}
+        <div class="chair"><i class="fas fa-chair fa-2x"></i></div>
+      <div class="holecards">
+        <!-- <div class="card holecard1"></div>
+      <div class="card holecard2"></div> -->
+      </div>
+      <div class="name-chips">
+          <div class="player-name"><p id='username6'>{{seat6}}</p></div>
+        <div class="chips"></div>
+      </div>
+      <div class="bet"></div>
+    </div>
+  </div>
+  <!-- </div>
+<button id="sit">Join Table</button>
+<button id="stand">Leave Table</button>
+<button id="changeMe">Change</button>
+<p id="change"></p> -->
+</div>
+
+<div class="actionBox">
+    <div class="chatContainer">
+        <div class="chatbox">
+          <ul id="messages" style="list-style-type:none;"></ul>
+        </div>
+        <div class="submitChat"
+          ><input type="text" id="myMessage" /><button id="sendbutton">Send</button>
+        </div>
+      </div>
+  <div class="cfr">
+      <div class="slidecontainer"><input
+      type="range"
+      min="0"
+      max="100"
+      value="0"
+      class="slider"
+      id="myRange"
+    /> &nbsp; BET &nbsp; <span>20</span> 
+  </div>
+    <button class="button" style="display:none;">Post BB</button>
+    <button class="button" style="display:none;">Post SB</button>
+    <button class="button">Check</button>
+    <button class="button">Fold</button>
+    <button class="button">Raise</button>
+    <div class="slidecontainer"></div>
+       
+      </div>
+  </div>
+</div>
+
+
+  {% endblock content %}
+  <!--  -->
+  {% block script %}
+  <!--  -->
+  <script>
+    avatars = []
+    $(document).ready(function() {
+    
+      var socket = io.connect("http://127.0.0.1:5000");
+      socket.on("connect", function() {
+        socket.send("has connected!");
+      });
+
+      socket.on("disconnect", function() {
+        socket.send("has left!");
+      });
+
+      socket.on("message", function(msg) {
+        $("#messages").append("<li>" + "" + " " + msg + "</li>");
+        console.log("Received message");
+      });
+
+      $("#sendbutton").on("click", function() {
+        socket.send($("#myMessage").val());
+        $("#myMessage").val("");
+      });
+
+      $("#seat1").on("click", function() {
+        socket.emit('buyIn', '1')
+      });
+
+      socket.on('takeSeat1', function() {
+          $('#BuyIn1').modal('show');
+        }) 
+    
+      $('#boughtChips1').on('click', function(){
+      amount = $('#boughtAmount1').val()
+      console.log(amount)
+      socket.emit("paid", amount);  
+        });
+      
+      socket.on('seat1Valid', function() {         
+          const seat = "Seat";
+          const value = document.getElementById('seat1').getAttribute('value');
+          const taken =  "taken";
+          const emitString = seat.concat(+ ' ' + value + ' ' + taken)
+          socket.emit("sat", value); 
+      })
+      
+
+
+      $("#seat2").on("click", function() {
+        const seat = "Seat";
+        const value = document.getElementById('seat2').getAttribute('value');
+        const taken =  "taken";
+        const emitString = seat.concat(+ ' ' + value + ' ' + taken)
+        socket.emit("sat", value);
+      });
+      $("#seat3").on("click", function() {
+        const seat = "Seat";
+        const value = document.getElementById('seat3').getAttribute('value');
+        const taken =  "taken";
+        const emitString = seat.concat(+ ' ' + value + ' ' + taken)
+        socket.emit("sat", value);
+      });
+      $("#seat4").on("click", function() {
+        const seat = "Seat";
+        const value = document.getElementById('seat4').getAttribute('value');
+        const taken =  "taken";
+        const emitString = seat.concat(+ ' ' + value + ' ' + taken)
+        socket.emit("sat", value);
+      });
+      $("#seat5").on("click", function() {
+        const seat = "Seat";
+        const value = document.getElementById('seat5').getAttribute('value');
+        const taken =  "taken";
+        const emitString = seat.concat(+ ' ' + value + ' ' + taken)
+        socket.emit("sat", value);
+      });
+      $("#seat6").on("click", function() {
+        const seat = "Seat";
+        const value = document.getElementById('seat6').getAttribute('value');
+        const taken =  "taken";
+        const emitString = seat.concat(+ ' ' + value + ' ' + taken)
+        socket.emit("sat", value);
+      });
+
+      $("#stand").on("click", function() {
+        socket.emit("stand", "stand");
+      });
+
+      $("#changeMe").on("click", function() {
+        inner = document.getElementById("change").innerHTML;
+        data = { changeIt: inner };
+        JSON.stringify(data);
+        socket.emit("changeMe", data);
+      });
+
+      socket.on("chips1", function(user_chips) {
+      document.getElementById("chips").innerHTML = user_chips;
+      $('#chips').show()
+      });
+
+      socket.on("change1", function(data) {
+      document.getElementById("username1").innerHTML = data;
+      $('#avi1').show()
+      $('#BuyIn1').modal('hide');
+      });
+    
+      socket.on("image1", function(image) {
+      document.getElementById('avi1').src = image 
+      });
+      // two
+      socket.on("change2", function(data) {
+      document.getElementById("username2").innerHTML = data;
+      $('#avi2').show()
+      });
+      socket.on("image2", function(image) {
+      document.getElementById('avi2').src = image 
+      });
+      // three
+      socket.on("change3", function(data) {
+      document.getElementById("username3").innerHTML = data;
+      $('#avi3').show()
+      });
+      socket.on("image3", function(image) {
+      document.getElementById('avi3').src = image 
+      });
+      // four
+      socket.on("change4", function(data) {
+      document.getElementById("username4").innerHTML = data;
+      $('#avi4').show()
+      });
+      socket.on("image4", function(image) {
+      document.getElementById('avi4').src = image 
+      });
+      // five
+      socket.on("change5", function(data) {
+      document.getElementById("username5").innerHTML = data;
+      $('#avi5').show()
+      });
+      socket.on("image5", function(image) {
+      document.getElementById('avi5').src = image 
+      });
+      // six
+      socket.on("change6", function(data) {
+      document.getElementById("username6").innerHTML = data;
+      $('#avi6').show()
+      });
+      socket.on("image6", function(image) {
+      document.getElementById('avi6').src = image 
+      });
+
+    });
+  </script>
+  {% endblock script %}
+</div>

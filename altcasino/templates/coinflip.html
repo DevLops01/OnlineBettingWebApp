@@ -1,0 +1,72 @@
+{% extends "layout.html" %} {% block content %}
+
+  <div class="coinflip">
+      {% if not current_user.is_authenticated %}
+      <small> Demo Mode </small>
+      {% endif %}
+      <div>
+          <h1 id="userbalance" class="balance" >BALANCE: {{ balance }} </h1>
+      </div>
+    Bet Amount
+    <!-- prettier-ignore  -->
+    <div>
+    <input autocomplete="off" class="BetAmount" name="bet" id="bet" type="number" step="0.1" value=10 />
+    </div>
+    <div>
+      <button id="half" class="changeButtons">1/2</button>
+      <button id="time2" class="changeButtons">2X</button>
+      <button id="max" class="changeButtons">MAX</button>
+    </div>
+    <br />
+    <!--  -->
+    <!-- prettier-ignore  -->
+    <button name="heads" type="submit" class="btn submitButton heads" id="heads" value="Heads">Heads</button>
+    <!-- prettier-ignore -->
+    <button name="tails" type="submit" class="btn submitButton tails" id="tails" value="Tails">Tails</button>
+  </div>
+
+  <div id="coin" class="coin"><p id="placeResult"></p></div>
+
+  <!-- prettier-ignore -->
+
+  <div id="successAlert" class="alert alert-success" role="alert" style="display:none;"></div>
+  <!-- prettier-ignore -->
+  <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>
+</div>
+
+{% endblock content %}
+
+<!-- Javascript -->
+{% block script %}
+<!-- {% if current_user.is_authenticated %} -->
+<script>
+
+
+$(document).ready(function() { 
+  var printout = "{{ balance }}"
+  if (printout <= 0) {
+    document.getElementById("heads").disabled = true; 
+    document.getElementById("tails").disabled = true; 
+  }
+})
+
+$("#bet").keyup(function() {
+    var printout = document.getElementById("bet").value;
+    var bal = "{{ balance}}";
+    var max = 150;
+    if (printout > max) {
+      $("#bet").val("150");
+    }
+    if (printout <= 0 || bal <= 0) {
+      document.getElementById("heads").disabled = true; 
+      document.getElementById("tails").disabled = true; 
+    } else {
+      document.getElementById("heads").disabled = false; 
+      document.getElementById("tails").disabled = false; 
+    }
+  });
+
+</script>
+<!-- {% endif %} -->
+
+{% endblock script %}
