@@ -7,7 +7,7 @@ chardet==3.0.4
 Click==7.0
 colorama==0.4.1
 dnspython==1.16.0
-eventlet==0.25.1
+eventlet==0.31.0
 Flask==1.1.1
 Flask-Bcrypt==0.7.1
 Flask-Login==0.4.1
